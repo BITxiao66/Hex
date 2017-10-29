@@ -1,0 +1,35 @@
+<html>
+<body onload="tojson('xuda')">
+<h2> welcome</h2><br/>
+<p>
+Name: <span id="name"></span><br /> 
+Adress: <span id="adress"></span><br /> 
+Age: <span id="age"></span><br /> 
+Phone: <span id="phone"></span><br /> 
+</p> 
+
+<script type="text/javascript">
+function tojson(str)
+{
+	var xmlhttp;
+	xmlhttp=new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			var jstr=xmlhttp.responseText;
+			var jobj=JSON.parse(jstr);
+			document.getElementById("name").innerHTML=jobj.Name 
+			document.getElementById("adress").innerHTML=jobj.Adress 
+			document.getElementById("age").innerHTML=jobj.Age 
+			document.getElementById("phone").innerHTML=jobj.Phone 
+		}
+	}
+	xmlhttp.open("POST","list/"+str,true);
+	xmlhttp.send();
+}
+</script>
+
+
+</body>
+</html>

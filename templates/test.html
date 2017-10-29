@@ -1,0 +1,20 @@
+script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="{{
+  url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+<!--Get Request-->
+<script>
+    var data={
+        'name':'kikay',
+        'age':18
+    }
+    $.ajax({
+        type:'GET',
+        url:'{{url_for("json_get")}}',
+        data:data,
+        dataType:'json',
+        success:function(data){
+            alert(JSON.stringify(data));
+            alert(data['test'])
+        }
+    });
+</script>
