@@ -1,11 +1,12 @@
  <template>
   <div class="info">
-    <el-row><input type="text" placeholder=".                                  还想听些什么？"  :class="'log-input'" v-model="keywords">
+    <el-row><input type="text" placeholder=".                                  还想听些什么？"  :class="'log-input'" >
     <el-button type="danger" @click="logout" >搜索</el-button>
     </el-row>
     <el-table
       :data="tableData" 
       style="width: 75%;"
+      id="result-table"
       align="center"> 
       <el-table-column
         prop="date"
@@ -42,34 +43,57 @@ border-radius: 5px;text-align: middle;}
 
   <script>
     export default {
-      data() {
-        return {
-          tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
+    created()
+    {
+       this.tojsontry();
+    },
+    data() {
+      return{
+      tableData: []
+      }
+    },
+    methods: {
+      tojson()
+      {
+          var data=[];
+          var obj={
+          "address": "New One 639", 
+          "date": "20171029", 
+          "name": "xuda"
         }
+        data[0]=obj;
+          this.tableData=data;
       },
-      methods: {
-        handleOpen(key, keyPath) {
-          console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-          console.log(key, keyPath);
-        },
+
+        tojsontry()
+        {
+          var data=[];
+          //alert('obj.date');
+        var xmlhttp;
+        xmlhttp=new XMLHttpRequest();
+        xmlhttp.open("POST","http://10.62.62.150:5000/json_test",true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange=function()
+        {       
+          if ((xmlhttp.readyState==4 && xmlhttp.status==200 ))
+          {
+            var jstr=xmlhttp.responseText;
+
+            var jobj=JSON.parse(jstr);
+            let count=jobj.count;
+            for(let i=0; i< count;i++)
+            {
+              var obj={};
+              obj.date=jobj.date[i];         
+              obj.name=jobj.name[i];
+              obj.address=jobj.address[i];
+              data[i] = obj;
+            }
+          }
+        }
+        this.tableData=data;
+      },
+
         logout(){
       //删除cookie并跳到登录页
       this.delCookie('session');
@@ -82,3 +106,4 @@ border-radius: 5px;text-align: middle;}
       }
     }
   </script>
+  

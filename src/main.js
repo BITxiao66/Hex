@@ -9,6 +9,7 @@ import App from './components/App'
 import Login from './components/Login'
 import UserInfo from './components/UserInfo'
 import Result from './components/Result'
+import Hello from './components/HelloWorld'
 //状态管理
 Vue.use(Vuex)
   //路由
@@ -27,6 +28,8 @@ const router = new VueRouter({
   }, {
     path: '/result',
     component: Result
+  },{path: '/hello',
+    component: Hello
   }]
 })
 
@@ -48,6 +51,7 @@ const store = new Vuex.Store({
     }
   }
 })
+
 
 //设置cookie,增加到vue实例方便全局调用
 //vue全局调用的理由是，有些组件所用到的接口可能需要session验证，session从cookie获取
@@ -79,14 +83,16 @@ Vue.prototype.delCookie =(name) => {
 
 //vue实例
 var app = new Vue({
-  data: {},
+  data(){
+    return {
+            tableData: []
+        }
+  },
   el: '#app',
   render: h => h(App),
   router,
   store,
   watch:{
-    "$router.push('/user_info/')" : 'checkLogin',
-    "$router.push('/login')" : 'checkLogin'
   },
   created() {
     this.checkLogin();
@@ -100,9 +106,6 @@ var app = new Vue({
       }else{
         this.$router.push('/user_info');
       }
-    },
-    search(){
-      this.$router.push('/result');
     }
   }
 })
