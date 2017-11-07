@@ -1,0 +1,56 @@
+<html>
+<head>
+
+<script type="text/javascript">
+function loadXMLDoc()
+{
+
+var xmlhttp;
+xmlhttp=new XMLHttpRequest();
+xmlhttp.open("GET","json_get",true);
+var JSONObject;
+xmlhttp.responseType = 'json';
+
+//xmlhttp.onreadystatechange=function(data)
+  //{
+  //if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    //{
+     //JSONObject=document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+     //JSONObject=this.response;
+    //}
+  //}
+
+xmlhttp.onloadstart = function(e) {
+  if (this.status == 200) {
+    JSONObject = this.response;
+    
+  }
+};
+
+xmlhttp.send();
+
+document.getElementById("jname").innerHTML=JSONObject.name
+document.getElementById("jage").innerHTML=JSONObject.age
+document.getElementById("jstreet").innerHTML=JSONObject.street
+document.getElementById("jphone").innerHTML=JSONObject.phone
+}
+
+
+</script>
+
+</head>
+<body>
+
+<body>
+<h2>Create A JSON Object In JavaScript</h2>
+
+<p>
+Name: <span id="jname"></span><br />
+Age: <span id="jage"></span><br />
+Address: <span id="jstreet"></span><br />
+Phone: <span id="jphone"></span><br />
+</p>
+<button type="button" onclick="loadXMLDoc()">change inner by AJAX </button>
+
+</body>
+</html>
