@@ -4,26 +4,45 @@ import requests
 import re
 import codecs
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8')
-def fun7():
+
+def fun10():
     info = dict()
     list_name = list()
-    list_id = list()
-    f1 = open("d:/163music/untitled/header/folk_id.txt","r")
-    f2 = codecs.open("d:/163music/untitled/header/folk_name.txt","r","utf-8")
-    line1 = f1.readline()
-    line2 = f2.readline()
+    my_list_id = list()
+    f1 = open("d:/163music/untitled/header/my_list.txt","r")
+    line1=f1.readline()
     count = 0
-    while line1:
+    while line1 !='':
         count+=1
-        list_id.append(line1[:-1])
-        list_name.append(line2[:-1])
+        f2 = open("d:/163music/untitled/header/list_id.txt","r")
+        line2=f2.readline()
+        index=0;
+        while line2 !='':
+            if line2[:-1] == line1[:-1]:
+                break
+            line2=f2.readline()
+            index+=1
+        f2.close()
+
+        f3 = codecs.open("d:/163music/untitled/header/list_name.txt","r","utf-8")
+        line3 = f3.readline()
+        while index > 0:
+            line3 = f3.readline()
+            index-=1
+        f3.close()
+
+        list_name.append(line3)
+        my_list_id.append(line1)
+
         line1 = f1.readline()
-        line2 = f2.readline()
+
     f1.close()
-    f2.close()
+
     info['count'] = count
-    info['list_id'] = list_id
+    info['list_id'] = my_list_id
     info['list_name'] = list_name
     return info
 
-print(fun7())
+obj=fun10()
+
+print(obj[''])
